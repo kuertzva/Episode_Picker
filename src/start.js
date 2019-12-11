@@ -1,5 +1,5 @@
 import React from 'react';
-import './start.css';
+import './static/start.scss';
 
 function Start(props) {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import './topBar.css';
+import './static/topBar.scss';
 
 export function TopBar(props) {
   var display;

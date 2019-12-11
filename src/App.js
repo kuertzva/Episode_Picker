@@ -1,6 +1,6 @@
 import React from 'react';
 import { TopBar } from './topBar.js';
-import './App.css';
+import './static/App.scss';
 import Start from './start.js';
 import Search from './search.js';
 import Details from './details.js';
