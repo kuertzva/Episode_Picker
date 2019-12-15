@@ -61,14 +61,18 @@ class App extends React.Component {
 
     // check if first batch
     if (!this.state.results) {
+      console.log(batch)
       this.setState({
         results: batch
       });
     } else {
       // add in new batch
-      this.setState((state) => ({
-        results: state.results.push(batch)
-      }));
+
+      var newResults = this.state.results.concat(batch);
+      console.log(newResults)
+      this.setState({
+        results: newResults
+      });
     }
   }
 

@@ -19,20 +19,6 @@ class Search extends React.Component {
       this.props.handleUpdate(data);
       console.log('received')
     });
-
-    /*
-    while (!success || attempts < 4) {
-      $.get('/q=' + this.props.query, function(data, status) {
-        alert(data, status);
-        //
-      });
-
-      attempts += 5;
-    }
-    */
-
-
-
   }
 
   componentDidMount() {
@@ -48,24 +34,6 @@ class Search extends React.Component {
     });
   }
 
-
-/*  loadScreenUpdate() {
-
-
-    var dots = this.state.dots;
-
-    // determine number of dots
-    if(dots < 3) {
-      dots += 1;
-    } else {
-      dots = 1;
-    }
-    // update
-    this.setState({
-      dots: dots
-    });
-  } */
-
   render() {
     var results
 
@@ -75,7 +43,7 @@ class Search extends React.Component {
         <div
           data-link={result.link}
           key={result.link}
-          onClick={alert('ya done clicked!')}
+          onClick={() => alert('ya done clicked!')}
           className="result"
         >
           <h3> {result.title} </h3>
@@ -109,14 +77,19 @@ class Search extends React.Component {
         </div>
       );
     } else {
+      console.log(this.props.results);
+      console.log(Array.isArray(this.props.results));
       var shows = this.props.results.map((show) => formatResult(show));
-      var result;
-      for (result in results) {
-        shows.push(formatResult(result));
-      }
       results = (
         <div id="results">
           {shows}
+          <button
+            id="more"
+            className='future-border'
+            onClick={this.run_search}
+          >
+            More Shows
+          </button>
         </div>
       )
     }

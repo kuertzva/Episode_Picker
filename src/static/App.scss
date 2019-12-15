@@ -1,6 +1,8 @@
 #frame {
   place-self: stretch;
   width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #content{
@@ -8,6 +10,8 @@
   grid-column: 1/13;
   grid-row: 2/13;
   border-radius: .8rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-color: rgba(0,0,0,0);
@@ -48,8 +52,9 @@
 
 @media screen and (min-width: 500px) {
   #content {
-    grid-column: 2/12;
+    grid-column: 2/12;/*
     border-color: #0000e6;
     border-style: solid;
-  }
+  } */
+}
 }
