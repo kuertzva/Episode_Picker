@@ -13,11 +13,13 @@ class App extends React.Component {
     this.navToggle = this.navToggle.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
 
     this.state = {
       nav: false,
       query: '',
       queried: false,
+      results: null,
       show: null,
       seasons: [],
       ratingFactor: null,
@@ -29,6 +31,7 @@ class App extends React.Component {
     this.setState((state) => ({
       nav: !(state.nav)
     }));
+
   }
 
   // start page functions
@@ -41,13 +44,41 @@ class App extends React.Component {
       query: value
     })
 
+    //console.log(this.state.query);
+
   }
 
   handleSearch() {
-    this.setState({
-      queried : true
-    })
+    if (this.state.query.length > 0) {
+      this.setState({
+        queried : true
+      })
+    }
+  }
 
+  //search page functions
+  updateSearch(batch) {
+
+    // check if first batch
+    if (!this.state.results) {
+      this.setState({
+        results: batch
+      });
+    } else {
+      // add in new batch
+      this.setState((state) => ({
+        results: state.results.push(batch)
+      }));
+    }
+  }
+
+  setShow(e) {
+    const element = e.target;
+    const show_link = element.getAttribute('data-link');
+
+    this.setState({
+      show: show_link
+    })
   }
 
   // Overlay will allow for pop ups. null for now
@@ -70,8 +101,10 @@ class App extends React.Component {
       } else {
         content = (
           <Search
-            results={null}
-            page={1}
+            query={this.state.query}
+            results={this.state.results}
+            handleUpdate={this.updateSearch}
+            setShow={this.setShow}
           />
         )
       }
@@ -80,7 +113,7 @@ class App extends React.Component {
         <Start
           query={this.state.query}
           handleChange={this.handleQuery}
-          handleSubmit={this.heandleSearch}
+          handleSubmit={this.handleSearch}
         />
       )
     }

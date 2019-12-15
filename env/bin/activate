@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/vincent/Documents/Projects/VK_website/ep_picker/env"
+VIRTUAL_ENV="/home/vincent/Documents/Projects/VK_website/Episode_Picker/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

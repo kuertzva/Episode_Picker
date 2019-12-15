@@ -1,0 +1,27 @@
+
+.loading {
+
+  float: left;
+
+  span:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4,end) 1000ms infinite;
+    animation: ellipsis steps(4,end) 1000ms infinite;
+    content: "...";
+    width: 0px;
+  }
+}
+
+@keyframes ellipsis {
+  to {
+    width: calc(1rem * 3);
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: calc(1rem * 3);
+  }
+}

@@ -15,19 +15,17 @@ function Start(props) {
           />
           <button
             className= "future-border"
-            onClick={props.handleSearch}
+            onClick={props.handleSubmit}
           >
             Search
           </button>
         </span>
       </div>
-      <div id='past-searches' className='quick-showcase'
-      className="future-border">
+      <div id='past-searches' className='quick-showcase future-border'>
         <p>Past Searches: IN DEVELOPMENT</p>
         <div className='showcase'></div>
       </div>
-      <div id='popular-searches' className='quick-showcase'
-      className="future-border">
+      <div id='popular-searches' className='quick-showcase future-border'>
         <p>Popular Searches: IN DEVELOPMENT</p>
         <div className='showcase'></div>
       </div>
