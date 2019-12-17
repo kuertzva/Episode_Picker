@@ -44,20 +44,16 @@ def get_image(id, debug = False):
     # chop size specifier off file name
     return image_src[0:-27] + ".jpg"
 
-def show_search(query, page, debug, length):
+def make_URL(query, page, length, debug):
     """
-    Returns a list containing
-    A) a list representing the next 5 shows. These are each represented by a
-    dict structured with a title, an ID and an image, in that order.
-    B) an indicating the maximum number of pages if first search (otherwise
-    value is None)
+    Format string for insertion into a IMDB URL
     """
+
     # example path
     #https://www.imdb.com/search/title/?title=test&title_type=tv_series&view=simple&count=5
 
-    # confirm function call
     if debug:
-        print("show_search()")
+        print("make_URL")
 
     # scrub search term for imdb
     formatted_term = "+".join(query.split())
@@ -69,19 +65,84 @@ def show_search(query, page, debug, length):
         page_specifier = ""
 
     # get BeautifulSoup data for search term
-    search_string = "https://www.imdb.com/search/title/?title=" + formatted_term + "&title_type=tv_series" + page_specifier + "&view=simple&count=5"
+    search_URL = f"https://www.imdb.com/search/title/?title={formatted_term}&title_type=tv_series&view=simple&count={length}{page_specifier}"
+
     if debug:
-        print(f"search_string: {search_string}")
-    search_soup = bs4.BeautifulSoup(requests.get(search_string).text, features="html.parser")
+        print(f"search_URL: {search_URL}")
+
+    return search_URL
+
+def cook_soup(url):
+    """
+    make a BS4 object
+    """
+
+    return bs4.BeautifulSoup(requests.get(url).text, features="html.parser")
+
+def calculate_max_page(results, length, debug):
+    """
+    determines the maximum number of pages through which a particular query
+    can cycle
+    """
+
+    if debug:
+        print("calculate_max_page()")
+        print(results)
+
+    max_pages = int(ceil(results / length))
+    if debug:
+        print(max_pages)
+
+    return max_pages
+
+def make_show_dict(element, debug):
+
+    if debug:
+        print(element)
+
+    #assure that element accessable
+    try:
+        outer_span = element
+    except:
+        return False;
+
+    a = outer_span.select('a')[0]
+
+    if debug:
+        print(a)
+
+    link = a.get('href')
+
+    s = {'title': a.contents[0],
+        'link': link,
+        'image': get_image(link, debug)
+        }
+
+    return s
+
+def show_search(query, page, debug = False, length = 5):
+    """
+    Returns a list containing
+    A) a list representing the next 5 shows. These are each represented by a
+    dict structured with a title, an ID and an image, in that order.
+    B) an indicating the maximum number of pages if first search (otherwise
+    value is None)
+    """
+
+    # confirm function call
+    if debug:
+        print("show_search()")
+
+    show = cook_soup(make_URL(query, page, length, debug))
 
     #get max_page
     if page < 1:
 
         # identify element that states range and number of results
-        desc = search_soup.select(".desc")[0]
+        desc = show.select(".desc")[0]
         span = desc.select("span")[0].contents[0][0:-8]
 
-        # get number of results
+        # extract number of results from show
         if span[:7] == "1-5 of ":
             span = span[7:]
         try:
@@ -90,10 +151,7 @@ def show_search(query, page, debug, length):
             result_num = 0
 
         # calculate max_pages
-        max_pages = int(ceil(result_num / 5))
-        if debug:
-            print(result_num)
-            print(max_pages)
+        max_pages = calculate_max_page(result_num, length, debug)
 
     else:
         max_pages = None;
@@ -101,36 +159,19 @@ def show_search(query, page, debug, length):
     # cultivate return list
     # this is reformatted for the compact page on the assumption
     # that it will load faster
-    links = search_soup.select(".lister-item-header")
+    entries = show.select(".lister-item-header")
 
     if debug:
-        print(len(links))
-        print(links)
+        print(len(entries))
+        print(entries)
 
     search_results = [[], max_pages]
 
-    for i in range(len(links)):
+    for i in range(len(entries)):
         if debug:
             print(f"result: {i}")
 
-        try:
-            outer_span = links[i]
-        except:
-            break
-
-        a = outer_span.select('a')[0]
-
-        if debug:
-            print(a)
-
-        link = a.get('href')
-
-        s = {'title': a.contents[0],
-            'link': link,
-            'image': get_image(link, debug)
-            }
-
-        search_results[0].append(s)
+        search_results[0].append(make_show_dict(entries[i], debug))
 
     if debug:
         print(f"search results length: {len(search_results[0])}")
