@@ -47,4 +47,16 @@ def run_search():
     #increment page
     session['q_page'] += 1
 
-    return jsonify(r[0])
+    more = (not session['max_page'] == session['q_page'])
+
+    return jsonify([r[0], more])
+
+@app.route('/details', methods=['POST'])
+def get_details():
+    if request.method == 'POST':
+        show_id = request.form['show_id']
+        seasons = get_seasons(show_id, dbg)
+
+        return jsonify(seasons)
+    else:
+        return False

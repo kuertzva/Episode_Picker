@@ -1,0 +1,15 @@
+.season {
+  height:1.5rem;
+  //width: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.s-active, .season:hover {
+  background-color: #0000e6;
+}
+
+.s-inactive {
+  background-color: transparent;
+  color: rgb(200,200,200);
+}

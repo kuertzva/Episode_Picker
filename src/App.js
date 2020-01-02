@@ -1,8 +1,9 @@
 import React from 'react';
 import { TopBar } from './topBar.js';
 import './static/App.scss';
+import Search from './search.js'
 import Start from './start.js';
-import Search from './search.js';
+import Results from './results.js';
 import Details from './details.js';
 import Episode from './episode.js';
 
@@ -11,15 +12,22 @@ class App extends React.Component {
     super(props);
 
     this.navToggle = this.navToggle.bind(this);
+    this.loadToggle = this.loadToggle.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
+    this.setShow = this.setShow.bind(this);
+    this.initSeasons = this.initSeasons.bind(this);
+    this.toggleSeason = this.toggleSeason.bind(this);
 
     this.state = {
       nav: false,
+      loading: false,
+      search_input: '',
       query: '',
       queried: false,
-      results: null,
+      results: [],
+      more_button: true,
       show: null,
       seasons: [],
       ratingFactor: null,
@@ -34,6 +42,13 @@ class App extends React.Component {
 
   }
 
+  loadToggle() {
+    this.setState((state) => ({
+      loading: !(state.loading)
+    }));
+  }
+
+
   // start page functions
   handleQuery(e) {
     const value = e.target.value;
@@ -41,7 +56,7 @@ class App extends React.Component {
     //scrub as needed later
 
     this.setState({
-      query: value
+      search_input: value
     })
 
     //console.log(this.state.query);
@@ -49,40 +64,81 @@ class App extends React.Component {
   }
 
   handleSearch() {
-    if (this.state.query.length > 0) {
-      this.setState({
-        queried : true
-      })
+    console.log("handleSearch")
+    if (this.state.search_input.length > 0
+        && this.state.search_input !== this.state.query) {
+      console.log("extra length");
+      this.setState((state) => ({
+        queried : true,
+        query: state.search_input,
+        results: [],
+        show: null,
+        seasons: [],
+        ratingFactor: null,
+        episode: null
+      }));
     }
   }
 
   //search page functions
-  updateSearch(batch) {
+  updateSearch(data) {
 
-    // check if first batch
-    if (!this.state.results) {
-      console.log(batch)
-      this.setState({
-        results: batch
-      });
-    } else {
-      // add in new batch
+    console.log('updateSearch');
 
-      var newResults = this.state.results.concat(batch);
-      console.log(newResults)
-      this.setState({
-        results: newResults
-      });
-    }
+    const batch = data[0];
+
+    console.log(batch.length);
+
+    this.setState({
+      results: this.state.results.concat(batch),
+      more_button: data[1]
+    });
+
+    this.loadToggle();
   }
 
   setShow(e) {
-    const element = e.target;
-    const show_link = element.getAttribute('data-link');
+    const element = e.currentTarget;
+    const showTitle = element.getAttribute('data-title');
+    const showId = element.getAttribute('data-id');
+    const showImage = element.getAttribute('data-image');
 
     this.setState({
-      show: show_link
+      show: {
+        title: showTitle,
+        id: showId,
+        image: showImage
+      }
+    });
+
+    this.loadToggle();
+  }
+
+  //details page functions
+  initSeasons(seasons) {
+    this.setState({
+      seasons: seasons
     })
+
+    if(this.state.loading) {
+      this.loadToggle();
+    }
+
+    console.log('updateSeasons()');
+  }
+
+  toggleSeason(seasonIndex) {
+    var newSeasons = this.state.seasons;
+
+    newSeasons[seasonIndex].active = !newSeasons[seasonIndex].active;
+
+    this.setState({
+      seasons: newSeasons
+    })
+  }
+
+  updateRating(e) {
+    return null;
   }
 
   // Overlay will allow for pop ups. null for now
@@ -91,35 +147,40 @@ class App extends React.Component {
 
     var content;
 
-    if (this.state.queried) {
-      if (this.state.seasons.length > 0) {
-        if (this.state.episode) {
-          content = (
-            <Episode/>
-          )
-        } else {
-          content = (
-            <Details/>
-          )
-        }
-      } else {
-        content = (
-          <Search
-            query={this.state.query}
-            results={this.state.results}
-            handleUpdate={this.updateSearch}
-            setShow={this.setShow}
-          />
-        )
-      }
+    if (this.state.episode) {
+      content = (
+        <Episode/>
+      );
+    } else if (this.state.show) {
+      content = (
+        <Details
+          show={this.state.show}
+          seasons={this.state.seasons}
+          rating={this.state.rating}
+          loading={this.state.loading}
+          loadToggle={this.state.loadToggle}
+          initSeasons={this.initSeasons}
+          toggleSeason={this.toggleSeason}
+          updateRating={this.updateRating}
+        />
+      );
+    } else if (this.state.queried) {
+      console.log(this.state.show);
+      content = (
+        <Results
+          query={this.state.query}
+          loading={this.state.loading}
+          loadToggle={this.loadToggle}
+          results={this.state.results}
+          more={this.state.more_button}
+          handleUpdate={this.updateSearch}
+          onClick={this.setShow}
+        />
+      );
     } else {
       content = (
-        <Start
-          query={this.state.query}
-          handleChange={this.handleQuery}
-          handleSubmit={this.handleSearch}
-        />
-      )
+        <Start/>
+      );
     }
 
     return (
@@ -130,6 +191,12 @@ class App extends React.Component {
           flip={this.navToggle}
         />
         <div id="content" className='future-border'>
+          <Search
+            search_input={this.state.search_input}
+            handleChange={this.handleQuery}
+            handleSubmit={this.handleSearch}
+          />
+          <br/>
           {content}
         </div>
       </div>

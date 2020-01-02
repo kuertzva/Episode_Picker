@@ -1,0 +1,32 @@
+@import 'mixins';
+
+#details-screen {
+
+
+}
+
+#details-display {
+
+
+
+  h3 {
+  text-align: center;
+  }
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 50vh;
+  }
+}
+
+#details-input {
+  
+}
+
+.load-details {
+  @include load-container;
+  transform: translateX(-3.5rem);
+  margin-top: 5vh;
+}

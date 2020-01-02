@@ -15,15 +15,15 @@ class TestShowSearch(unittest.TestCase):
         """
 
         self.test_URLs = [
-        make_URL('red', 3, 5, False),
-        make_URL('blue', 1, 5, False),
-        make_URL('pokemon', 1, 5, False),
-        make_URL('dog', 2, 5, False),
-        make_URL('dragon', 3, 5, False),
-        make_URL('always', 1, 5, False),
-        make_URL('always', 1, 5, False),
-        make_URL('ppppppp', 1, 5, False),
-        make_URL('dragop', 3, 5, False),
+        make_search_URL('red', 3, 5, False),
+        make_search_URL('blue', 1, 5, False),
+        make_search_URL('pokemon', 1, 5, False),
+        make_search_URL('dog', 2, 5, False),
+        make_search_URL('dragon', 3, 5, False),
+        make_search_URL('always', 1, 5, False),
+        make_search_URL('always', 1, 5, False),
+        make_search_URL('ppppppp', 1, 5, False),
+        make_search_URL('dragop', 3, 5, False),
         ]
 
         """
@@ -54,9 +54,9 @@ class TestShowSearch(unittest.TestCase):
         1, 1, 2, 2, 3, 21, 10, 6, 1, 1, 2, 2
         ]
 
-    def test_make_URL(self):
+    def test_make_search_URL(self):
         """
-        Ensures that make_URL produces correctly formatted URLs
+        Ensures that make_search_URL produces correctly formatted URLs
         """
 
         for url in self.test_URLs:

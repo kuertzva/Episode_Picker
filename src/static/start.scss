@@ -4,30 +4,6 @@
   width: 100%;
 }
 
-#search-section {
-  display: block;
-  justify-content: center;
-  padding-right: auto;
-  width: 90%;
-}
-
-#search-section span {
-  margin: 0;
-}
-
-#search-section input[type=text]{
-  background-color: transparent;
-  border: none;
-  outline:none;
-  border-bottom: .3rem solid white;
-  width: 50%;
-}
-
-#search-section button {
-  display: inline-block;
-  margin-left: .5rem;
-}
-
 #past-searches, #popular-searches {
   display: block;
   margin-top: 1rem;

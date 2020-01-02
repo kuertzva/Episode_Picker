@@ -44,7 +44,7 @@ def get_image(id, debug = False):
     # chop size specifier off file name
     return image_src[0:-27] + ".jpg"
 
-def make_URL(query, page, length, debug):
+def make_search_URL(query, page, length, debug):
     """
     Format string for insertion into a IMDB URL
     """
@@ -53,7 +53,7 @@ def make_URL(query, page, length, debug):
     #https://www.imdb.com/search/title/?title=test&title_type=tv_series&view=simple&count=5
 
     if debug:
-        print("make_URL")
+        print("make_search_URL")
 
     # scrub search term for imdb
     formatted_term = "+".join(query.split())
@@ -111,11 +111,11 @@ def make_show_dict(element, debug):
     if debug:
         print(a)
 
-    link = a.get('href')
+    id = a.get('href')
 
     s = {'title': a.contents[0],
-        'link': link,
-        'image': get_image(link, debug)
+        'id': id,
+        'image': get_image(id, debug)
         }
 
     return s
@@ -133,7 +133,7 @@ def show_search(query, page, debug = False, length = 5):
     if debug:
         print("show_search()")
 
-    show = cook_soup(make_URL(query, page, length, debug))
+    show = cook_soup(make_search_URL(query, page, length, debug))
 
     #get max_page
     if page < 1:
@@ -177,3 +177,36 @@ def show_search(query, page, debug = False, length = 5):
         print(f"search results length: {len(search_results[0])}")
 
     return search_results
+
+def get_seasons(show_id, debug=False):
+    """
+    this uses the IMDB id to get the seasons in a shows
+
+    This returns a list as opposed to an int due to the possibility of
+    irregularities with IMDBs representations
+    """
+
+    if debug:
+        print("begin get_seasons()")
+
+    # get the BeautifulSoup data
+    show_URL = "https://www.imdb.com/" + show_id + "episodes/"
+    soup = cook_soup(show_URL);
+
+    # We are acquiring this data from a drop down, which the below line selects
+    select_elem = soup.select('#bySeason')
+    seasons = []
+    # account for the possibility of a one season show
+    if len(select_elem) == 0:
+        seasons.append(1)
+    else:
+        # get contents of drop down
+        options = select_elem[0].select('option')
+
+        # add each season
+        for season in options:
+            seasons.append(season.get('value'))
+        if debug:
+            print(f"Seasons {seasons}")
+
+    return seasons
