@@ -9,7 +9,7 @@ from random import randint
 app = Flask(__name__, static_folder='build/static',
 template_folder='build')
 #app.secret_key = os.environ.get('SECRET_KEY', None)
-app.secret_key = "placeholder"
+app.secret_key = os.environ.get('SECRET_KEY', None)
 dbg = True
 
 @app.route('/')
