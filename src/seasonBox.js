@@ -10,11 +10,6 @@ function SeasonBox(props) {
   }
 
   function makeSeason(season) {
-    console.log('makeSeason()');
-
-    if (!season.active) {
-      alert("inactivity registered");
-    }
 
     var index = props.seasons.indexOf(season);
     return (
@@ -37,7 +32,10 @@ function SeasonBox(props) {
     <div
       id='season-box'
     >
-      {contents}
+      <h4>Seasons:</h4>
+      <div id='seasons'>
+        {contents}
+      </div>
     </div>
   );
 }

@@ -55,8 +55,21 @@ def run_search():
 def get_details():
     if request.method == 'POST':
         show_id = request.form['show_id']
+        session['show_id'] = show_id
         seasons = get_seasons(show_id, dbg)
 
         return jsonify(seasons)
+    else:
+        return False
+
+@app.route('/episode', methods=['POST'])
+def get_episode():
+    if request.method == 'POST':
+        seasons = request.form.getlist('season_list[]')
+        rating_factor = request.form['ratingFactor']
+        episode = make_episode(session['show_id'], seasons, int(rating_factor), dbg)
+
+        return jsonify(episode)
+
     else:
         return False

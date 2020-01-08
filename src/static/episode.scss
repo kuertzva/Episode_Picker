@@ -1,0 +1,22 @@
+@import 'mixins';
+
+#episode-top {
+  h3 {
+    @include top-header;
+  }
+
+  img {
+    @include single-image;
+  }
+}
+
+#episode-bottom {
+  @include sub-display;
+}
+
+#episode-button-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 1rem;
+}

@@ -15,14 +15,12 @@ class Details extends React.Component {
     $.post('/details', {'show_id': this.props.show.id},
     (data) => {
       //format seasons
-      console.log('data received');
       var seasons = data.map((season) => {
         return {
           number: season,
           active: true
         }
       })
-      console.log('data formatted');
       this.props.initSeasons(seasons);
     });
   }
@@ -50,7 +48,8 @@ class Details extends React.Component {
           />
           <RatingBox
             rating={this.props.rating}
-            updateRating={this.props.rating}
+            updateRating={this.props.updateRating}
+            generateEpisode={this.props.generateEpisode}
           />
         </div>
       );

@@ -1,0 +1,82 @@
+@import 'mixins';
+$thumb-color: white;
+$thumb-size: 1rem;
+
+#rating-box {
+
+  position: relative;
+
+  justify-self: start;
+
+  h4 {
+    margin-left: -2rem;
+  }
+
+  // reset the slider for styling
+  input[type=range] {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 100%; /* Specific width is required for Firefox. */
+    background: transparent; /* Otherwise white in Chrome */
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  input[type=range]:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+
+  input[type=range]::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    /* Hides the slider so custom styles can be added */
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  // styling the input
+
+  input {
+    //margin-left: 2rem;
+    margin-top: 1rem;
+    border-bottom: .2rem solid white;
+    width: 2rem;
+  }
+
+  input[type=range]::-webkit-slider-thumb{
+    @include triangle-down($thumb-color, $thumb-size);
+    margin-top: -14px;
+    cursor: pointer;
+  }
+
+  input[type=range]::-ms-thumb {
+    @include triangle-down($thumb-color, $thumb-size);
+    cursor: pointer;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    @include triangle-down($thumb-color, $thumb-size);
+    cursor: pointer;
+  }
+
+  #left-label {
+    display: inline;
+  }
+
+  #right-label {
+    display: inline;
+    float: right;
+    margin-right: 0px;
+  }
+
+  button {
+    display: block;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+  }
+}

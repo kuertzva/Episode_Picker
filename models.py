@@ -210,3 +210,123 @@ def get_seasons(show_id, debug=False):
             print(f"Seasons {seasons}")
 
     return seasons
+
+def make_episode_dict(show_id, seasons, factor, debug):
+    """
+    makes a dictionary containing a list of episodes calls "episodes" and
+    a list of weights based on ratings called "weights"
+    """
+
+
+    if debug:
+        print("begin make_episode_dict()")
+        print(f"Seasons: {seasons}")
+        print(f"Factor: {factor}")
+
+    episodes = {"episodes": [], "weights": []}
+
+    #this is the url that will be modified to access individual seasons
+    base_url = f"https://www.imdb.com/{show_id}episodes?season="
+
+    if debug:
+        print(f"Base URL: {base_url}")
+
+    # iterate through seasons
+    for season in seasons:
+        if debug:
+            print(seasons)
+        season_url = base_url + season
+        season_soup = bs4.BeautifulSoup(requests.get(season_url).text, features="html.parser")
+        episode_divs = season_soup.select(".list_item")
+
+        #iterate through episodes
+        for i in range(len(episode_divs)):
+            if debug:
+                print(i)
+            div = episode_divs[i]
+            ep_link = div.select('strong > a')[0].get('href')
+            rating_elem = div.select('.ipl-rating-star__rating')
+
+            # excludes unrated episodes ensuring they have been airred
+            if len(rating_elem) != 0:
+                rating = float(rating_elem[0].contents[0])
+
+                #add episode
+                episodes["episodes"].append({"id": ep_link,
+                                    "season": int(season),
+                                    "number": i + 1,
+                                    "rating": rating})
+
+                # add weight if there is a factor selected
+                if factor != 0:
+                    weight = rating ** factor
+                    episodes["weights"].append(weight)
+                    if debug:
+                        print(f"weight: {weight}")
+
+    return episodes
+
+def pick_episode(episodes, debug):
+    """
+    picks random episode based on weighted random pick
+    """
+
+    if debug:
+        print("begin pick_episode()")
+
+    if debug:
+        print(episodes)
+
+    # pick episodes
+    # if factored
+    if len(episodes["weights"]) != 0:
+        e = choices(episodes["episodes"],
+                    weights = episodes["weights"])[0]
+    # otherwise
+    else:
+        choice = choices(episodes["episodes"])
+        print(choice)
+        e = choices(episodes["episodes"])[0]
+
+    return e
+
+def create_episode(episode, debug=False):
+    """
+    Gathers necessary information about the episode and returns as dict
+
+    {"title": , "summary": , "image": , "id": , "season": , "number": , "rating"}
+    """
+
+    # get BeautifulSoup data for extracting details
+    episode_url = "https://www.imdb.com/" + episode["id"]
+    episode_soup = bs4.BeautifulSoup(requests.get(episode_url).text, features="html.parser")
+
+    #get title
+    title_wrapper = episode_soup.select(".title_wrapper")[0]
+    episode["title"] = title_wrapper.select("h1")[0].contents[0].replace(u'\xa0', ' ')
+
+    #get summary
+    episode["summary"] = episode_soup.select(".summary_text")[0].contents[0].replace(u'\n', ' ')
+
+    #get image
+    episode["image"] = get_image(episode["id"], debug)
+
+    return episode
+
+def make_episode(show_id, seasons, factor, debug=False):
+    """
+    takes show_id, seasons and rating factor as inputs and returns an episode
+    """
+
+    if debug:
+        print("begin make_episode()")
+        print(seasons, factor)
+
+    #cultivate list of episodes ratings
+    episode_list = make_episode_dict(show_id, seasons, factor, debug)
+
+    #pick an episode
+    episode = pick_episode(episode_list, debug)
+
+    #gather episode information & return
+    return create_episode(episode, debug)

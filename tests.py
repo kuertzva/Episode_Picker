@@ -54,6 +54,15 @@ class TestShowSearch(unittest.TestCase):
         1, 1, 2, 2, 3, 21, 10, 6, 1, 1, 2, 2
         ]
 
+        # shows in order: madmen, batman TAS, star trek, king of the hill, game
+        # of thrones, breaking bad, the soprano, battlestar galactica,
+        # seinfeld
+        self.season_tests = [
+        ('tt0804503', 7), ('tt0103359', 4), ('tt0060028', 3), ('tt0118375', 13),
+        ('tt0944947', 8), ('tt0903747', 5), ('tt0141842', 6),
+        ('tt0407362', 4), ('tt0098904', 9)
+        ]
+
     def test_make_search_URL(self):
         """
         Ensures that make_search_URL produces correctly formatted URLs
@@ -118,7 +127,6 @@ class TestShowSearch(unittest.TestCase):
         """
         check make_show_dict works with first result of a soup
         """
-        print('ran')
 
         for i in range(len(self.test_soups)):
             with self.subTest(i=i):
@@ -133,10 +141,20 @@ class TestShowSearch(unittest.TestCase):
                         self.assertNotEqual(show['title'], None)
 
                     with self.subTest(show=show):
-                        self.assertNotEqual(show['link'], None)
+                        self.assertNotEqual(show['id'], None)
 
                 else:
                     self.assertEqual(1, 1)
+
+    def test_len_season_list(self):
+        """
+        make sure len of get_seasons output is correctly
+        """
+
+        for i in range(len(self.season_tests)):
+            with self.subTest(i=i):
+                test_string = 'title/' + self.season_tests[i][0] + '/'
+                self.assertEqual(len(get_seasons(test_string)), self.season_tests[i][1])
 
 """
 Moved to bottom to prevent bug

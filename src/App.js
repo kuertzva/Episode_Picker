@@ -6,6 +6,7 @@ import Start from './start.js';
 import Results from './results.js';
 import Details from './details.js';
 import Episode from './episode.js';
+import $ from 'jquery';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,9 @@ class App extends React.Component {
     this.setShow = this.setShow.bind(this);
     this.initSeasons = this.initSeasons.bind(this);
     this.toggleSeason = this.toggleSeason.bind(this);
+    this.updateRating = this.updateRating.bind(this);
+    this.generateEpisode = this.generateEpisode.bind(this);
+    this.clearEpisode = this.clearEpisode.bind(this);
 
     this.state = {
       nav: false,
@@ -30,7 +34,7 @@ class App extends React.Component {
       more_button: true,
       show: null,
       seasons: [],
-      ratingFactor: null,
+      ratingFactor: 1,
       episode: null
     }
   }
@@ -74,7 +78,7 @@ class App extends React.Component {
         results: [],
         show: null,
         seasons: [],
-        ratingFactor: null,
+        ratingFactor: 1,
         episode: null
       }));
     }
@@ -138,7 +142,40 @@ class App extends React.Component {
   }
 
   updateRating(e) {
-    return null;
+    this.setState({
+      ratingFactor: e.target.value
+    })
+  }
+
+  generateEpisode() {
+
+    // find active seasons for search
+    var active_seasons = [];
+    var season;
+    for(season of this.state.seasons) {
+      if(season.active) {
+        active_seasons.push(season.number);
+      }
+    }
+
+    //console.log(active_seasons);
+
+    // get episode
+    $.post('/episode', { season_list: active_seasons, ratingFactor: this.state.ratingFactor
+    }, (data) => {
+      //format seasons
+      console.log('data received');
+      this.setState({
+        episode: data
+      })
+      console.log('data formatted');
+    });
+  }
+
+  clearEpisode() {
+    this.setState({
+      episode: null
+    })
   }
 
   // Overlay will allow for pop ups. null for now
@@ -149,19 +186,24 @@ class App extends React.Component {
 
     if (this.state.episode) {
       content = (
-        <Episode/>
+        <Episode
+          episode={this.state.episode}
+          changeParams={this.clearEpisode}
+          reroll={this.generateEpisode}
+        />
       );
     } else if (this.state.show) {
       content = (
         <Details
           show={this.state.show}
           seasons={this.state.seasons}
-          rating={this.state.rating}
+          rating={this.state.ratingFactor}
           loading={this.state.loading}
           loadToggle={this.state.loadToggle}
           initSeasons={this.initSeasons}
           toggleSeason={this.toggleSeason}
           updateRating={this.updateRating}
+          generateEpisode={this.generateEpisode}
         />
       );
     } else if (this.state.queried) {
