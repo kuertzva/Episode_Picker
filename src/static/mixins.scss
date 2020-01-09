@@ -1,7 +1,7 @@
-@mixin load-container{
+@mixin load-container($chars){
   position: relative;
   left: 50%;
-  margin-top: 1rem;
+  transform: translateX(($chars / 2) * -1rem);
 }
 
 @mixin triangle-down($color, $size) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import MainButton from './mainButton.js';
 import './static/search.scss';
 
 function Search(props) {
@@ -12,12 +13,12 @@ function Search(props) {
           onChange={(e) => props.handleChange(e)}
           value={props.query}
         />
-        <button
-          className= "future-border"
-          onClick={props.handleSubmit}
-        >
-          Search
-        </button>
+        <MainButton
+          id='search-button'
+          title='Search'
+          action={props.handleSubmit}
+          link={false}
+        />
       </span>
     </div>
   )

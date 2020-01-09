@@ -34,13 +34,11 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-around;
-  padding-top: auto;
-  padding-bottom: auto;
   margin-bottom: 1.4rem;
 }
 
-#top-bar div * {
-  padding: .25rem;
+#top-bar .button-wrapper {
+  //padding: .25rem;
   margin: .6rem;
 }
 
@@ -48,19 +46,6 @@
   font-size: 3rem;
   padding: 0px;
 /*  color: #0000e6;*/
-}
-
-#github-link {
-  float: right;
-  text-decoration: none;
-}
-
-#github-link, #nav-bar-open {
-
-  border-style: solid;
-  border-color: #0000e6;
-  color: white;
-  background-color: rgba(0,0,0,0)
 }
 
 #nav-bar {

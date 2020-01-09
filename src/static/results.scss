@@ -53,6 +53,5 @@
 }
 
 .load-results {
-  @include load-container;
-  transform: translateX(-4.5rem);
+  @include load-container(9);
 }

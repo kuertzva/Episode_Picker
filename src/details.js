@@ -49,7 +49,7 @@ class Details extends React.Component {
           <RatingBox
             rating={this.props.rating}
             updateRating={this.props.updateRating}
-            generateEpisode={this.props.generateEpisode}
+            changeEpisode={this.props.changeEpisode}
           />
         </div>
       );

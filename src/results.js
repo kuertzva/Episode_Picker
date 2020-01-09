@@ -1,5 +1,6 @@
 import React from 'react';
 import LoadScreen from './loadScreen.js';
+import MainButton from './mainButton.js';
 import './static/results.scss';
 import $ from 'jquery';
 
@@ -110,13 +111,12 @@ class Results extends React.Component {
         );
       } else if (this.props.more) {
         footer = (
-          <button
-            id="more"
-            className='future-border'
-            onClick={this.runSearch}
-          >
-            More Shows
-          </button>
+          <MainButton
+            id='more-shows-button'
+            title='More Shows'
+            action={this.runSearch}
+            link={false}
+          />
         );
       } else {
         footer = null;

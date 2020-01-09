@@ -28,7 +28,6 @@
 }
 
 .load-details {
-  @include load-container;
-  transform: translateX(-3.5rem);
+  @include load-container(7);
   margin-top: 5vh;
 }

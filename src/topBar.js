@@ -1,4 +1,5 @@
 import React from 'react';
+import MainButton from './mainButton.js';
 import './static/topBar.scss';
 
 export function TopBar(props) {
@@ -26,17 +27,21 @@ export function TopBar(props) {
     display = (
       <div id='top-bar'>
         <div>
-          <button
-            id='nav-bar-open'
-            className='future-border'
-            onClick={props.flip}
-          >Nav Bar</button>
+          <MainButton
+            id='open-nav-button'
+            action={props.flip}
+            title='Nav Bar'
+            link={false}
+            inline={true}
+          />
           <h1> Episode Picker </h1>
-          <a
-            href='https://github.com/kuertzva/Episode_Picker'
-            id='github-link'
-            className='future-border buttonish'
-          >Github</a>
+          <MainButton
+            id='github-button'
+            action='https://github.com/kuertzva/Episode_Picker'
+            title='Github'
+            link={true}
+            inline={true}
+          />
         </div>
       </div>
     )

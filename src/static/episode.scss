@@ -1,5 +1,10 @@
 @import 'mixins';
 
+#load-episode {
+  margin-top: 10rem;
+  @include load-container(7);
+}
+
 #episode-top {
   h3 {
     @include top-header;

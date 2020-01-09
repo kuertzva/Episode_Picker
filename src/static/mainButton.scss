@@ -1,0 +1,18 @@
+.button-wrapper {
+  position:relative;
+  display: inline-block;
+
+  button, a.buttonish {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.inline {
+  white-space: nowrap;
+
+  * {
+  display: inline;
+  }
+}

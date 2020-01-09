@@ -40,16 +40,17 @@
   border-radius: .5rem
 }
 
-.buttonish, button {
+a.buttonish, button {
   background-color: rgba(0,0,0,0);
   align-self: center;
+  padding: .5rem;
+  text-decoration: none;
 }
 
 .buttonish:active,.buttonish:hover, button:active, button:hover {
   border-width: .1rem;
   margin-left: .9rem;
 }
-
 
 
 @media screen and (min-width: 500px) {

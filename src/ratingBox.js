@@ -1,4 +1,5 @@
 import React from 'react';
+import MainButton from './mainButton.js';
 import './static/ratingBox.scss';
 
 function RatingBox(props) {
@@ -18,12 +19,12 @@ function RatingBox(props) {
         <h5 id='left-label'> None </h5>
         <h5 id='right-label'> Max </h5>
       </div>
-      <button
-        className= 'future-border'
-        onClick={props.generateEpisode}
-      >
-        Submit
-      </button>
+      <MainButton
+        id='get-episode-button'
+        title='Submit'
+        action={() => props.changeEpisode('empty')}
+        link={false}
+      />
     </div>
   );
 }

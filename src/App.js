@@ -6,7 +6,7 @@ import Start from './start.js';
 import Results from './results.js';
 import Details from './details.js';
 import Episode from './episode.js';
-import $ from 'jquery';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class App extends React.Component {
     this.initSeasons = this.initSeasons.bind(this);
     this.toggleSeason = this.toggleSeason.bind(this);
     this.updateRating = this.updateRating.bind(this);
-    this.generateEpisode = this.generateEpisode.bind(this);
+    this.changeEpisode = this.changeEpisode.bind(this);
     this.clearEpisode = this.clearEpisode.bind(this);
 
     this.state = {
@@ -147,29 +147,10 @@ class App extends React.Component {
     })
   }
 
-  generateEpisode() {
-
-    // find active seasons for search
-    var active_seasons = [];
-    var season;
-    for(season of this.state.seasons) {
-      if(season.active) {
-        active_seasons.push(season.number);
-      }
-    }
-
-    //console.log(active_seasons);
-
-    // get episode
-    $.post('/episode', { season_list: active_seasons, ratingFactor: this.state.ratingFactor
-    }, (data) => {
-      //format seasons
-      console.log('data received');
-      this.setState({
-        episode: data
-      })
-      console.log('data formatted');
-    });
+  changeEpisode(data) {
+    this.setState({
+      episode: data
+    })
   }
 
   clearEpisode() {
@@ -188,8 +169,11 @@ class App extends React.Component {
       content = (
         <Episode
           episode={this.state.episode}
+          seasons={this.state.seasons}
+          rating={this.state.ratingFactor}
           changeParams={this.clearEpisode}
-          reroll={this.generateEpisode}
+          changeEpisode={this.changeEpisode}
+          loading={this.state.loading}
         />
       );
     } else if (this.state.show) {
@@ -203,7 +187,7 @@ class App extends React.Component {
           initSeasons={this.initSeasons}
           toggleSeason={this.toggleSeason}
           updateRating={this.updateRating}
-          generateEpisode={this.generateEpisode}
+          changeEpisode={this.changeEpisode}
         />
       );
     } else if (this.state.queried) {
