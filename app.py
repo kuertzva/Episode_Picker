@@ -68,7 +68,7 @@ def get_episode():
     if request.method == 'POST':
         seasons = request.form.getlist('season_list[]')
         rating_factor = request.form['ratingFactor']
-        episode = make_episode(session['show_id'], seasons, int(rating_factor), dbg)
+        episode = make_episode(session['show_id'], seasons, float(rating_factor), dbg)
 
         return jsonify(episode)
 
