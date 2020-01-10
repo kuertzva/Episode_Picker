@@ -135,7 +135,7 @@ class Results extends React.Component {
 
     return (
       <div id="results-page">
-        <h2> {"Search for '" +this.props.query + "':"} </h2>
+        <h2> Search for <span> {"'" + this.props.query + "':"} </span> </h2>
         {results}
       </div>
     );

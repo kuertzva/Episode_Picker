@@ -4,6 +4,10 @@
   position: relative;
   h2, h3 {
     text-align: center;
+
+    span {
+      font-size: inherit;
+    }
   }
 }
 

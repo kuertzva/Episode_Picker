@@ -20,7 +20,8 @@
 
     .button-wrapper {
       display: inline-block;
-      top:.4rem;
+      top:.6rem;
+      bottom: auto;
       margin-left: .5rem;
     }
 
@@ -30,7 +31,7 @@
       }
 
       .button-wrapper {
-        top: 0rem;
+        //top: 0rem;
       }
     }
   }

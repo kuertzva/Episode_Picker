@@ -1,22 +1,20 @@
 #season-box {
-  margin-left: 15%;
-  align-self: end;
+  h4 {
+    text-align: center;
+  }
 
-}
+  @media screen and (max-width: 550px) {
 
-#seasons {
-  align-self: end;
-  margin-top: 1rem;
-  margin-left: 2rem;
-  position: relative;
-  //width: 70%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 1.5rem);
-  grid-gap: .5rem;
-}
+    margin-bottom: 1rem;
+    width: 100%;
+    place-self: center;
+  }
 
-@media screen and (min-width: 800px) {
-  #season-box{
-    margin-left: 40%;
+  #seasons {
+    margin-top: 1rem;
+    place-self: stretch;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 2.3rem);
+    grid-gap: .5rem;
   }
 }

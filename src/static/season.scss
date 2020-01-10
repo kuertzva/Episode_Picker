@@ -1,15 +1,23 @@
+@import 'mixins';
+
 .season {
-  height:1.5rem;
-  //width: 1.5rem;
+  height:2.2rem;
+  width: 2.2rem;
   font-size: 1.5rem;
   text-align: center;
 }
 
-.s-active, .season:hover {
-  background-color: #0000e6;
+.s-active {
+  background-color: $future-blue;
 }
 
 .s-inactive {
   background-color: transparent;
-  color: rgb(200,200,200);
+  color: rgb(220,220,220);
+}
+
+@media screen and (min-width: 800px) {
+  .season:hover {
+    background-color: $future-blue;
+  }
 }

@@ -1,10 +1,5 @@
 @import 'mixins';
 
-#details-screen {
-
-
-}
-
 #details-display {
 
   h3 {
@@ -20,9 +15,16 @@
 
   @include sub-display;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 5rem;
+  @media screen and (max-width: 550px) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 551px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3rem;
+  }
 
 
 }
