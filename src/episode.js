@@ -1,3 +1,4 @@
+
 import React from 'react';
 import LoadScreen from './loadScreen.js';
 import MainButton from './mainButton.js';
@@ -34,6 +35,12 @@ class Episode extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.episode === 'empty') {
+      this.generateEpisode();
+    }
+  }
+
+  componentDidUpdate() {
     if (this.props.episode === 'empty') {
       this.generateEpisode();
     }

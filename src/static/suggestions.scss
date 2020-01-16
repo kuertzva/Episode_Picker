@@ -1,0 +1,15 @@
+.showcase {
+  position: relative;
+  height: 60vh;
+  margin-left: .5rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.suggestion-box {
+  display: block;
+  margin-top: 1rem;
+  padding: .5rem;
+}

@@ -205,7 +205,9 @@ class App extends React.Component {
       );
     } else {
       content = (
-        <Start/>
+        <Start
+          setShow={this.setShow}
+        />
       );
     }
 

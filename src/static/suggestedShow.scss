@@ -1,0 +1,14 @@
+.suggested-show {
+  width: 25vw;
+
+  h3 {
+    width: 25vw;
+  }
+
+  img {
+    height: calc(100% - 6rem);
+    justify-self: center;
+    position: absolute;
+    bottom: 0;
+  }
+}

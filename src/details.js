@@ -12,7 +12,9 @@ class Details extends React.Component {
 
   componentDidMount() {
     // gather the seasons from server
-    $.post('/details', {'show_id': this.props.show.id},
+    $.post('/details', {
+      'show_id': this.props.show.id, "title": this.props.show.title,
+      "image": this.props.show.image},
     (data) => {
       //format seasons
       var seasons = data.map((season) => {
