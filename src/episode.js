@@ -31,7 +31,15 @@ class Episode extends React.Component {
       console.log('data received');
       this.props.changeEpisode(data);
       console.log('data formatted');
+
+      $.get('/update_runs', (data, success) => {
+        if (data !== "blank") {
+          document.cookie = data;
+        }
+      });
     });
+
+
   }
 
   componentDidMount() {

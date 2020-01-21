@@ -8,7 +8,11 @@ function Start(props) {
     <div id='start-page'>
       <Suggestions
         setShow={props.setShow}
-        user={null}
+        user={true}
+      />
+      <Suggestions
+        setShow={props.setShow}
+        user={false}
       />
     </div>
   );

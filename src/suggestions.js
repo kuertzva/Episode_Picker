@@ -14,7 +14,7 @@ class Suggestions extends React.Component {
   componentDidMount() {
 
     if(this.props.user) {
-      $.post('/past_runs', {"runs": this.props.user},
+      $.get('/past_runs',
       (data) => {
         this.setState({
           shows: data
@@ -38,6 +38,8 @@ class Suggestions extends React.Component {
     } else {
       title = 'Popular Searches'
     }
+
+    //alert("suggestion:" + this.props.user + this.state.shows)
 
     if (this.state.shows === null || this.state.length === 0) {
       return null;

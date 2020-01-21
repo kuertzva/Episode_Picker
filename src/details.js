@@ -15,16 +15,13 @@ class Details extends React.Component {
     $.post('/details', {
       'show_id': this.props.show.id, "title": this.props.show.title,
       "image": this.props.show.image},
-    (data) => {
-      //format seasons
-      var seasons = data.map((season) => {
-        return {
-          number: season,
-          active: true
-        }
-      })
-      this.props.initSeasons(seasons);
-    });
+      (data) => {
+        this.props.initSeasons(data);
+        $.get('/update_show');
+      });
+
+
+
   }
 
   render() {

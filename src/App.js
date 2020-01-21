@@ -23,6 +23,7 @@ class App extends React.Component {
     this.updateRating = this.updateRating.bind(this);
     this.changeEpisode = this.changeEpisode.bind(this);
     this.clearEpisode = this.clearEpisode.bind(this);
+    this.suggestionJump = this.suggestionJump.bind(this);
 
     this.state = {
       nav: false,
@@ -120,8 +121,18 @@ class App extends React.Component {
 
   //details page functions
   initSeasons(seasons) {
+    //format seasons
+    var formattedSeasons = seasons.map((season) => {
+      return {
+        number: season,
+        active: true
+      }
+    })
+
+
+
     this.setState({
-      seasons: seasons
+      seasons: formattedSeasons
     })
 
     if(this.state.loading) {
@@ -157,6 +168,38 @@ class App extends React.Component {
     this.setState({
       episode: null
     })
+  }
+
+  suggestionJump(e) {
+    this.setShow(e)
+
+    const element = e.currentTarget;
+    var showSeasons = element.getAttribute('data-seasons');
+    var activeSeasons = element.getAttribute('data-active');
+    const ratingFactor = element.getAttribute('data-ratingFactor');
+
+    if (showSeasons && ratingFactor) {
+
+      showSeasons = showSeasons.split(',');
+      activeSeasons = activeSeasons.split(',');
+      showSeasons = showSeasons.map(season => parseInt(season));
+      activeSeasons = activeSeasons.map(season => parseInt(season));
+
+
+      this.initSeasons(showSeasons);
+
+      var season;
+      for(season of showSeasons) {
+        if(!activeSeasons.includes(season)) {
+          this.toggleSeason(season - 1);
+        }
+      }
+
+      this.setState({
+        ratingFactor: parseFloat(ratingFactor)
+      })
+    }
+
   }
 
   // Overlay will allow for pop ups. null for now
@@ -206,7 +249,7 @@ class App extends React.Component {
     } else {
       content = (
         <Start
-          setShow={this.setShow}
+          setShow={this.suggestionJump}
         />
       );
     }
