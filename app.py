@@ -14,8 +14,8 @@ import datetime
 app = Flask(__name__, static_folder='build/static',
 template_folder='build')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:8008@localhost/EpPicker'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:8008@localhost/EpPicker'
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.secret_key = os.environ.get('SECRET_KEY', None)
 db = SQLAlchemy(app)
 dbg = False

@@ -9,8 +9,8 @@ import datetime
 #from app import db, app
 
 
-#engine = create_engine('postgresql://postgres:8008@localhost/EpPicker')
-engine = create_engine(os.environ.get('DATABASE_URL'))
+engine = create_engine('postgresql://postgres:8008@localhost/EpPicker')
+#engine = create_engine(os.environ.get('DATABASE_URL'))
 db = scoped_session(sessionmaker(bind=engine))
 
 def get_new_user():
@@ -82,16 +82,13 @@ def update_runs(run):
 
     #check if run for show exists with matching user
     row = db.execute("SELECT * FROM run WHERE show_id= :show_id AND cookie= :cookie",
-                        {"show_id": run["show_id"], "cookie": str(run["user"])}).fetchall()
+                        {"show_id": run["show_id"], "cookie": str(run["user"])}).fetchone()
 
     #if so, update seasons and rating factor
-    if len(row) > 0:
-        if len(row) > 1:
-            print("ERROR, duplicate show runs")
-        print(row)
+    if row != None:
 
         db.execute(
-        "UPDATE run SET seasons = :seasons, active=:active rating_factor = :rating_factor, time_stamp = :time_stamp WHERE id = :id",
+        "UPDATE run SET seasons = :seasons, active=:active, rating_factor = :rating_factor, time_stamp = :time_stamp WHERE id = :id",
         {"seasons" : run["seasons"], "active": run["active"], "rating_factor": run["rating_factor"], "time_stamp": datetime.datetime.now(), "id": row.id}
         )
 

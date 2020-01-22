@@ -51,6 +51,7 @@ class App extends React.Component {
   }
 
   loadToggle() {
+    alert(this.state.loading);
     this.setState((state) => ({
       loading: !(state.loading)
     }));
@@ -119,18 +120,39 @@ class App extends React.Component {
       }
     });
 
-    this.loadToggle();
+  if (this.state.loading) {
+      this.loadToggle();
+  }
   }
 
   //details page functions
-  initSeasons(seasons) {
+  initSeasons(seasons, activeSeasons = null) {
     //format seasons
-    var formattedSeasons = seasons.map((season) => {
-      return {
-        number: season,
-        active: true
+    var formattedSeasons;
+
+    if (activeSeasons){
+
+      formattedSeasons = seasons.map((season) => {
+        return {
+          number: season,
+          active: false
+        }
+      })
+
+      var season;
+      for (season of activeSeasons) {
+        formattedSeasons[season - 1].active = true;
       }
-    })
+
+    } else {
+      formattedSeasons = seasons.map((season) => {
+        return {
+          number: season,
+          active: true
+        }
+      })
+    }
+
 
 
 
@@ -147,6 +169,8 @@ class App extends React.Component {
 
   toggleSeason(seasonIndex) {
     var newSeasons = this.state.seasons;
+    console.log(newSeasons);
+
 
     newSeasons[seasonIndex].active = !newSeasons[seasonIndex].active;
 
@@ -198,17 +222,9 @@ class App extends React.Component {
       showSeasons = showSeasons.map(season => parseInt(season));
       activeSeasons = activeSeasons.map(season => parseInt(season));
 
-
-      this.initSeasons(showSeasons);
-
-      var season;
-      for(season of showSeasons) {
-        console.log("season: " + season)
-        if(!activeSeasons.includes(season)) {
-          this.toggleSeason(season - 1);
-        }
-      }
-      console.log("ratingFactor: " + ratingFactor)
+      console.log("showSeasons: " + showSeasons);
+      console.log("activeSeasons: " + activeSeasons);
+      this.initSeasons(showSeasons, activeSeasons);
 
       this.setState({
         ratingFactor: parseFloat(ratingFactor)
