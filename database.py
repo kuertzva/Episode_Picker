@@ -23,7 +23,6 @@ def get_new_user():
         big_cookie = row.cookie
 
     print(big_cookie)
-    print(big_cookie))
 
     return big_cookie + 1
 
