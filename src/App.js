@@ -24,6 +24,8 @@ class App extends React.Component {
     this.changeEpisode = this.changeEpisode.bind(this);
     this.clearEpisode = this.clearEpisode.bind(this);
     this.suggestionJump = this.suggestionJump.bind(this);
+    this.toggleJumpSeasons = this.toggleJumpSeasons.bind(this);
+
 
     this.state = {
       nav: false,
@@ -35,6 +37,7 @@ class App extends React.Component {
       more_button: true,
       show: null,
       seasons: [],
+      jumpSeasons: false;
       ratingFactor: 1,
       episode: null
     }
@@ -152,6 +155,15 @@ class App extends React.Component {
     })
   }
 
+  toggleJumpSeaons() {
+    /* This is the flag that tells details whether or not it needs
+    to get the seasons from the server */
+
+    this.setState((state) => ({
+      jumpSeasons: !state.jumpSeasons
+    });
+  }
+
   updateRating(e) {
     this.setState({
       ratingFactor: e.target.value
@@ -179,7 +191,7 @@ class App extends React.Component {
     const ratingFactor = element.getAttribute('data-ratingFactor');
 
     if (showSeasons && ratingFactor) {
-
+      this.toggleJumpSeaons()
       showSeasons = showSeasons.split(',');
       activeSeasons = activeSeasons.split(',');
       showSeasons = showSeasons.map(season => parseInt(season));
@@ -226,9 +238,11 @@ class App extends React.Component {
           seasons={this.state.seasons}
           rating={this.state.ratingFactor}
           loading={this.state.loading}
+          jumpSeasons={this.state.jumpSeasons}
           loadToggle={this.state.loadToggle}
           initSeasons={this.initSeasons}
           toggleSeason={this.toggleSeason}
+          toggleJumpSeasons={this.toggleJumpSeasons}
           updateRating={this.updateRating}
           changeEpisode={this.changeEpisode}
         />
