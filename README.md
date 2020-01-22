@@ -31,3 +31,5 @@ The front end is a create-react-app which uses jQuery to make asynchronous calls
 Unfortunately, the coding became more and more sloppy and less commented as I approached my limitations. My first priority will be to reorganize and add comments. 
 
 After that, I want to add the ability to navigate the app using the address route. That way a user can bookmark the episode page and will be able quickly reuse later.
+
+There's probably more.
