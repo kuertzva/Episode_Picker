@@ -202,10 +202,12 @@ class App extends React.Component {
 
       var season;
       for(season of showSeasons) {
+        console.log("season: " + season)
         if(!activeSeasons.includes(season)) {
           this.toggleSeason(season - 1);
         }
       }
+      console.log("ratingFactor: " + ratingFactor)
 
       this.setState({
         ratingFactor: parseFloat(ratingFactor)
