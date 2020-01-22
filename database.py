@@ -19,8 +19,9 @@ def get_new_user():
     if not big_cookie:
         big_cookie = 0
 
-    print(big_cookie["cookie"])
-    print(type(big_cookie.cookie))
+    else:
+        print(big_cookie["cookie"])
+        print(type(big_cookie.cookie))
 
     return big_cookie.cookie + 1
 
