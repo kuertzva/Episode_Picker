@@ -14,8 +14,8 @@ import datetime
 app = Flask(__name__, static_folder='build/static',
 template_folder='build')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:8008@localhost/EpPicker'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:8008@localhost/EpPicker'
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.secret_key = os.environ.get('SECRET_KEY', None)
 db = SQLAlchemy(app)
 dbg = False
@@ -25,7 +25,7 @@ class Show(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     title = db.Column(db.String(128), nullable=False)
     link = db.Column(db.String(17), unique=True, nullable=False)
-    image = db.Column(db.String(128))
+    image = db.Column(db.String(256))
     searches = db.Column(db.Integer, nullable=False)
     runs = db.relationship('Run', backref=db.backref('show', lazy=True))
 
@@ -207,9 +207,11 @@ def record_run():
         print("got da cookie")
 
         #set cookie
+
+        expire_date = datetime.datetime.now() + datetime.timedelta(days=90)
         resp = make_response("set cookie")
         print("made response")
-        resp.set_cookie('vkeppicker', new_cookie)
+        resp.set_cookie('vkeppicker', new_cookie, expires=expire_date)
         print("SET DA COOKIE")
         session['user'] = int(new_cookie)
     else:

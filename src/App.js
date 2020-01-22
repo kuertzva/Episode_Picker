@@ -58,7 +58,7 @@ class App extends React.Component {
   }
 
   loadToggle() {
-    alert(this.state.loading);
+    //alert(this.state.loading);
     this.setState((state) => ({
       loading: !(state.loading)
     }));

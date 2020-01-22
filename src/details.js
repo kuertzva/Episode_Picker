@@ -20,7 +20,7 @@ class Details extends React.Component {
         if(this.props.jumpSeasons) {
           this.props.toggleJumpSeasons();
         } else {
-          alert("JUMP");
+          //alert("JUMP");
           this.props.initSeasons(data);
         }
         $.get('/update_show');

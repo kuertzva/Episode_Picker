@@ -1,15 +1,14 @@
 .suggested-show {
-  width: 25vw;
+  display: inline-block;
+  margin-right: 1rem;
+
 
   h3 {
-    width: 25vw;
-  }
+    height: 10vh;
 
+  }
   img {
-    max-height: calc(100% - 6rem);
+    max-height: 50vh;
     justify-self: center;
-    position: absolute;
-    bottom: 0;
-    max-width: 25vw;
   }
 }
