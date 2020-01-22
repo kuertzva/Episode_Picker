@@ -15,15 +15,17 @@ db = scoped_session(sessionmaker(bind=engine))
 
 def get_new_user():
     print("begin get_new_user()")
-    big_cookie = db.execute("SELECT * FROM run ORDER BY cookie desc LIMIT 1").fetchone()
-    if not big_cookie:
+    row = db.execute("SELECT * FROM run ORDER BY cookie desc LIMIT 1").fetchone()
+    if not row:
         big_cookie = 0
 
     else:
-        print(big_cookie["cookie"])
-        print(type(big_cookie.cookie))
+        big_cookie = row.cookie
 
-    return big_cookie.cookie + 1
+    print(big_cookie)
+    print(big_cookie))
+
+    return big_cookie + 1
 
 def get_show_id(link):
 
