@@ -2,6 +2,8 @@
 
 This is an in progress personal project. As of now, the core functionality appears to work just fine, but other features like the suggestions are more of a prototype at this stage. While unfinished, I am currently setting aside this project to learn other projects.
 
+Note this runs pretty slow. I'm using the free heroku hosting, so it is just limited.
+
 It would be greatly appreciated if you send any bugs to vincent.kuertz@gmail.com.
 
 ### How to use
