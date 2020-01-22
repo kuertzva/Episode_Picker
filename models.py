@@ -79,6 +79,37 @@ def cook_soup(url):
 
     return bs4.BeautifulSoup(requests.get(url).text, features="html.parser")
 
+def get_show(id, debug):
+    """
+    takes imbd id and retrieves a title and image
+    """
+
+    if debug:
+        print("begin get_show()")
+        print(f"link: {id}")
+
+    req = requests.get("https://www.imdb.com" + id)
+    show_soup = bs4.BeautifulSoup(req.text, features="html.parser")
+
+    #get title
+    title_wrapper = show_soup.select(".title_wrapper")
+    header = title_wrapper.select("h1")
+
+    # access poster poster_div
+    try:
+        poster_div = show_soup.select(".poster")[0]
+    except:
+        return None
+
+    image_src = poster_div.select("a > img")[0].get("src")
+
+
+    ret = {"title": header.contents,"id": id, "image": image_src[0:-27] + ".jpg"}
+    # chop size specifier off file name
+    return ret
+
+
+
 def calculate_max_page(results, length, debug):
     """
     determines the maximum number of pages through which a particular query

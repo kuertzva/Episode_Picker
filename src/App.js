@@ -6,6 +6,7 @@ import Start from './start.js';
 import Results from './results.js';
 import Details from './details.js';
 import Episode from './episode.js';
+import $ from 'jquery';
 
 
 class App extends React.Component {
@@ -25,6 +26,8 @@ class App extends React.Component {
     this.clearEpisode = this.clearEpisode.bind(this);
     this.suggestionJump = this.suggestionJump.bind(this);
     this.toggleJumpSeasons = this.toggleJumpSeasons.bind(this);
+    this.addressJump = this.addressJump.bind(this);
+
 
 
     this.state = {
@@ -41,6 +44,10 @@ class App extends React.Component {
       ratingFactor: 1,
       episode: null
     }
+  }
+
+  componentDidMount() {
+    this.addressJump();
   }
 
   navToggle() {
@@ -230,8 +237,40 @@ class App extends React.Component {
         ratingFactor: parseFloat(ratingFactor)
       })
     }
-
   }
+
+  addressJump() {
+    console.log("addressJump()")
+    $.get("/address_jump", (data,success) => {
+
+      if (data["jump"]) {
+
+        this.setState({
+          show: {
+            title: data["show"]["title"],
+            id: data["show"]["id"],
+            image: data["show"]["image"]
+          }
+        });
+
+        if (data["active"]) {
+          this.initSeasons(data["seasons"], data["active"])
+        }
+
+        if (data["rating_factor"]) {
+          this.setState({
+            ratingFactor: data["rating_factor"]
+          })
+        }
+/*
+        if (data["active"] && data["rating_factor"]) {
+
+        } */
+      }
+
+    });
+  }
+
 
   // Overlay will allow for pop ups. null for now
   render() {

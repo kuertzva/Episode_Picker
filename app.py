@@ -41,10 +41,37 @@ class Run(db.Model):
     time_stamp = db.Column(db.Time())
 
 # routes
-
 @app.route('/')
 def index():
+    print("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNDEEEEEEEEEEEXXXXXXXXXXXXXXXXXXXXXXXXXXxx")
+    link = request.args.get('id', default = None, type = string)
+    print("LLIUIIIINK: " + link)
+    session["link"] = "title/" + link + "/"
+    active = request.args.get('active', default = None, type = string)
+    session["active"] = list(map(int, active.split(',')))
+    session["rating_factor"] = request.args.get('rf', default = None, type = float)
+    if link == None:
+        session["jump"] = False
+    else:
+        session["jump"] = True
+
+
+    print ("JJJJJJJJJJJJJJJJJJJJUMP: " + session["jump"])
+
     return render_template('index.html')
+
+@app.route('/address_jump')
+def address_jump():
+
+    bundle = {
+        "jump": session["jump"],
+        "show": get_show(session["link"], dbg),
+        "seasons": get_seasons(session["link"], dbg),
+        "activeSeasons": session["active"],
+        "ratingFactor": session["rating_factor"]
+    }
+
+    return jsonify(bundle)
 
 @app.route('/past_searches')
 def top_shows():
