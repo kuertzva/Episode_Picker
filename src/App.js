@@ -192,7 +192,7 @@ class App extends React.Component {
     const ratingFactor = element.getAttribute('data-ratingFactor');
 
     if (showSeasons && ratingFactor) {
-      this.toggleJumpSeaons()
+      this.toggleJumpSeasons()
       showSeasons = showSeasons.split(',');
       activeSeasons = activeSeasons.split(',');
       showSeasons = showSeasons.map(season => parseInt(season));
