@@ -37,7 +37,7 @@ class App extends React.Component {
       more_button: true,
       show: null,
       seasons: [],
-      jumpSeasons: false;
+      jumpSeasons: false,
       ratingFactor: 1,
       episode: null
     }
@@ -155,13 +155,13 @@ class App extends React.Component {
     })
   }
 
-  toggleJumpSeaons() {
+  toggleJumpSeasons() {
     /* This is the flag that tells details whether or not it needs
     to get the seasons from the server */
 
     this.setState((state) => ({
       jumpSeasons: !state.jumpSeasons
-    });
+    }));
   }
 
   updateRating(e) {

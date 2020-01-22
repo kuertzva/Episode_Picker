@@ -12,7 +12,7 @@ class Details extends React.Component {
 
   componentDidMount() {
     // gather the seasons from server
-    if (!props.jumpSeasons) {
+    if (!this.props.jumpSeasons) {
     $.post('/details', {
       'show_id': this.props.show.id, "title": this.props.show.title,
       "image": this.props.show.image},
@@ -21,7 +21,7 @@ class Details extends React.Component {
         $.get('/update_show');
       });
     } else {
-      props.toggleJumpSeaons();
+      this.props.toggleJumpSeaons();
       $.get('/update_show');
     }
   }
