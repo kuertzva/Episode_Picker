@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Episode Picker
 
-## Available Scripts
+This is an in progress personal project. As of now, the core functionality appears to work just fine, but other features like the suggestions are more of a prototype at this stage. While unfinished, I am currently setting aside this project to learn other projects.
 
-In the project directory, you can run:
+It would be greatly appreciated if you send any bugs to vincent.kuertz@gmail.com.
 
-### `npm start`
+### How to use
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The search bar will run a search in IMDB. This search is fairly finicky. It requires full words and is unforgiving towards misspeelings.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+This will then provide a series of five results. More results can be received by pressing the button at the bottom of the page. 
 
-### `npm test`
+On selection of a show, you can then decide which seasons will be eligible for selection and whether to weight the selection towards selecting more highly rated episodes (based on IMDBs ratings).
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once an episode is selected, buttons will provide you the options of A) getting a different episode using the same parameters and B) changing your parameters.
 
-### `npm run build`
+The front page will also provide suggestions. Recent searches are the 10 most recent shows by the current user (recorded in SQL and retrived with a cookie that lasts 90 days) and will save the rating factor and active seasons of the most recent search. 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Popular searches are the 10 most popularly searched shows by all users with nothing saved.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### How it's made
 
-### `npm run eject`
+The front end is a create-react-app which uses jQuery to make asynchronous calls to the server. The backend is a python/flask app. It gathers information about the shows/episodes using beautifulsoup4 webscraping. The searches are saved to a PostgreSQL database using flask-SQLAlchemy.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### What's next?
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Unfortunately, the coding became more and more sloppy and less commented as I approached my limitations. My first priority will be to reorganize and add comments. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+After that, I want to add the ability to navigate the app using the address route. That way a user can bookmark the episode page and will be able quickly reuse later.
