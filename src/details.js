@@ -21,7 +21,7 @@ class Details extends React.Component {
         $.get('/update_show');
       });
     } else {
-      this.props.toggleJumpSeaons();
+      this.props.toggleJumpSeasons();
       $.get('/update_show');
     }
   }
