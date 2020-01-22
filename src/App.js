@@ -45,11 +45,11 @@ class App extends React.Component {
       episode: null
     }
   }
-
+/*
   componentDidMount() {
     this.addressJump();
   }
-
+*/
   navToggle() {
     this.setState((state) => ({
       nav: !(state.nav)

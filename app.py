@@ -43,6 +43,7 @@ class Run(db.Model):
 # routes
 @app.route('/')
 def index():
+    """
     print("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNDEEEEEEEEEEEXXXXXXXXXXXXXXXXXXXXXXXXXXxx")
     link = request.args.get('id', default = None, type = string)
     print("LLIUIIIINK: " + link)
@@ -57,9 +58,10 @@ def index():
 
 
     print ("JJJJJJJJJJJJJJJJJJJJUMP: " + session["jump"])
+    """
 
     return render_template('index.html')
-
+"""
 @app.route('/address_jump')
 def address_jump():
 
@@ -72,7 +74,7 @@ def address_jump():
     }
 
     return jsonify(bundle)
-
+""" 
 @app.route('/past_searches')
 def top_shows():
     """
