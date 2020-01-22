@@ -9,8 +9,8 @@ import datetime
 #from app import db, app
 
 
-engine = create_engine('postgresql://postgres:8008@localhost/EpPicker')
-#engine = create_engine(os.environ.get('DATABASE_URL'))
+#engine = create_engine('postgresql://postgres:8008@localhost/EpPicker')
+engine = create_engine(os.environ.get('DATABASE_URL'))
 db = scoped_session(sessionmaker(bind=engine))
 
 def get_new_user():
