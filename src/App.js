@@ -183,6 +183,7 @@ class App extends React.Component {
   }
 
   suggestionJump(e) {
+    console.log("suggestionJump()")
     this.setShow(e)
 
     const element = e.currentTarget;
